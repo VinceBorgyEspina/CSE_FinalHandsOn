@@ -264,3 +264,25 @@ def delete_event_series(id):
         ),
         200,
     )
+#Queries
+@app.route('/query_join', methods=['GET'])
+def get_query_join():
+    query = "SELECT athlete.athlete_firstname, athlete.athlete_surname, club.club_name FROM athlete INNER JOIN club ON athlete.athlete_id = club.club_id INNER JOIN event_series ON athlete.athlete_id = event_series.series_number"
+    result = data_fetch(query)
+    return result
+
+
+@app.route('/query_sort', methods=['GET'])
+def get_query_sort():
+    query = "SELECT athlete.athlete_firstname, athlete.athlete_surname, club.club_name FROM athlete INNER JOIN club ON athlete.athlete_id = club.club_id INNER JOIN event_series ON athlete.athlete_id = event_series.series_number ORDER BY athlete.athlete_surname ASC"
+    result = data_fetch(query)
+    return result
+
+@app.route('/query_group', methods=['GET'])
+def get_query_group():
+    query = "SELECT event_name, COUNT(*) AS participant_count FROM athlete INNER JOIN club ON athlete.athlete_id = club.club_id INNER JOIN event_series ON athlete.athlete_id = event_series.series_number INNER JOIN event ON athlete.athlete_id = event.event_id GROUP BY event.event_name"
+    result = data_fetch(query)
+    return result
+
+if __name__ == "__main__":
+    app.run(debug=True)
