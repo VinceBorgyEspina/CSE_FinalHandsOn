@@ -36,3 +36,39 @@ def data_fetch(query):
         return jsonify({"error": str(e)}), 500
     finally:
         cur.close()
+
+@app.route('/athlete', methods=['GET'])
+def get_employees():
+    query = "SELECT * FROM mydb.athlete"
+    result = data_fetch(query)
+    return result
+
+@app.route('/athlete/<int:id>', methods=['GET'])
+def get_athlete__by_id(id):
+    query = f"SELECT * FROM mydb.athlete WHERE athlete_id = {id}"
+    result = data_fetch(query)
+    return result
+
+@app.route('/club', methods=['GET'])
+def get_club():
+    query = "SELECT * FROM mydb.club"
+    result = data_fetch(query)
+    return result
+
+@app.route('/club/<int:id>', methods=['GET'])
+def get_club__by_id(id):
+    query = f"SELECT * FROM mydb.club WHERE club_id = {id}"
+    result = data_fetch(query)
+    return result
+
+@app.route('/event_series', methods=['GET'])
+def get_event_series():
+    query = "SELECT * FROM mydb.event_series"
+    result = data_fetch(query)
+    return result
+
+@app.route('/club/<int:id>', methods=['GET'])
+def get_event_series__by_id(id):
+    query = f"SELECT * FROM mydb.event_series WHERE series_number = {id}"
+    result = data_fetch(query)
+    return result
